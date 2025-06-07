@@ -1,5 +1,9 @@
+import random
+
 import pygame
 import pygame.gfxdraw
+
+from light import Light
 from ray import Ray
 from wall import Wall
 
@@ -17,9 +21,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # Clock for controlling frame rate
 clock = pygame.time.Clock()
 
-wall = Wall(700, 200, 700, 300)
+walls = []
+    # Wall(700, 200, 700, 300)
+for _ in range(5):
+    x1 = random.randint(0, WIDTH)
+    y1 = random.randint(0, HEIGHT)
+    x2 = random.randint(0, WIDTH)
+    y2 = random.randint(0, HEIGHT)
+    walls.append(Wall(x1, y1, x2, y2))
 
-ray = Ray((200, 250), 90)
+lightSource = Light(400, 300)
 
 # Main game loop
 running = True
@@ -34,15 +45,15 @@ while running:
 
     # Game logic goes here
     mouse_pos = pygame.mouse.get_pos()
-    ray.update(mouse_pos)
-    pt = ray.cast(wall)
+    lightSource.update(mouse_pos[0], mouse_pos[1])
+
 
     # Drawing
     screen.fill(BG_COLOR)
-    wall.show(screen)
-    ray.show(screen)
-    if pt:
-        pygame.draw.aaline(screen, (255, 255, 255), ray.origin, pt)
+    for wall in walls:
+        wall.show(screen)
+
+    lightSource.cast(screen, walls[0])
     # Update display
     pygame.display.flip()
 

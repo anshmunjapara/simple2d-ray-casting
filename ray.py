@@ -8,7 +8,7 @@ class Ray:
         self.length = 10
 
     def show(self, surface):
-        pygame.draw.line(surface, (255, 255, 255), self.origin, self.origin + self.dir * self.length, 2)
+        pygame.draw.aaline(surface, (255, 255, 255), self.origin, self.origin + self.dir * self.length, 2)
 
     def update(self, pos):
         self.dir.x = pos[0] - self.origin[0]
@@ -30,6 +30,5 @@ class Ray:
 
         if 0 <= t <= 1 and u >= 0:
             intersection = pygame.math.Vector2(x1 + t * (x2 - x1), y1 + t * (y2 - y1))
-            print("colide at")
             return intersection
         return None
