@@ -1,5 +1,7 @@
 import pygame
 
+from ray import Ray
+from wall import Wall
 
 # Initialize Pygame
 pygame.init()
@@ -15,8 +17,13 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # Clock for controlling frame rate
 clock = pygame.time.Clock()
 
+wall = Wall(700, 200, 700, 300)
+
+ray = Ray((200, 250), 90)
+
 # Main game loop
 running = True
+
 while running:
     clock.tick(FPS)  # Limit FPS
 
@@ -29,13 +36,10 @@ while running:
 
     # Drawing
     screen.fill(BG_COLOR)
-
-    # Example: draw a red circle
-    pygame.draw.circle(screen, (255, 0, 0), (WIDTH // 2, HEIGHT // 2), 50)
-
+    wall.show(screen)
+    ray.show(screen)
     # Update display
     pygame.display.flip()
 
 # Clean up
 pygame.quit()
-
