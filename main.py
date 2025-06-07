@@ -1,5 +1,5 @@
 import pygame
-
+import pygame.gfxdraw
 from ray import Ray
 from wall import Wall
 
@@ -33,11 +33,16 @@ while running:
             running = False
 
     # Game logic goes here
+    mouse_pos = pygame.mouse.get_pos()
+    ray.update(mouse_pos)
+    pt = ray.cast(wall)
 
     # Drawing
     screen.fill(BG_COLOR)
     wall.show(screen)
     ray.show(screen)
+    if pt:
+        pygame.draw.aaline(screen, (255, 255, 255), ray.origin, pt)
     # Update display
     pygame.display.flip()
 

@@ -8,8 +8,12 @@ class Ray:
         self.length = 10
 
     def show(self, surface):
+        pygame.draw.line(surface, (255, 255, 255), self.origin, self.origin + self.dir * self.length, 2)
 
-        pygame.draw.line(surface, (255, 255, 255), self.origin, self.origin + self.dir*self.length, 2)
+    def update(self, pos):
+        self.dir.x = pos[0] - self.origin[0]
+        self.dir.y = pos[1] - self.origin[1]
+        self.dir.normalize_ip()
 
     def cast(self, wall):
         x1, y1 = wall.start
