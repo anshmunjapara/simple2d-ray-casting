@@ -7,9 +7,6 @@ from ray import Ray
 ALPHA = 0.0001
 
 
-
-
-
 class Light:
     def __init__(self, x, y):
         self.position = pygame.math.Vector2(x, y)
@@ -27,7 +24,6 @@ class Light:
         self.rays.clear()
         for wall in walls:
             for point in [wall.start, wall.end]:
-                print(point)
                 angle = math.degrees(math.atan2(point.y - self.position.y, point.x - self.position.x))
                 angle -= 90
                 for delta in [-ALPHA, 0, ALPHA]:
@@ -38,10 +34,19 @@ class Light:
         self.update_rays(walls)
 
         ray_surf = pygame.Surface(surface.get_size(), pygame.SRCALPHA)
-        for ray in self.rays:
-            ray.show(surface)
 
         intersections = []
+        wall_intersections = []
+
+        for wall1 in walls:
+            for wall2 in walls:
+                if wall1 != wall2:
+                    pt = wall1.wall_to_wall_intersection(wall2)
+                    if pt:
+                        angle = math.degrees(math.atan2(pt.y - self.position.y, pt.x - self.position.x))
+                        angle -= 90
+                        self.rays.append(Ray(self.position, angle))
+
         for ray in self.rays:
             minDistance = float('inf')
             minPt = None
