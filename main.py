@@ -37,6 +37,9 @@ walls.append(Wall(0, HEIGHT, 0, 0))
 
 lightSource = Light(400, 300)
 
+drawing_wall = False
+wall_start = None
+
 # Main game loop
 running = True
 
@@ -47,7 +50,19 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left click
+            keys = pygame.key.get_mods()
+            if keys & pygame.KMOD_SHIFT:
+                if not drawing_wall:
+                    wall_start = pygame.mouse.get_pos()
+                    drawing_wall = True
+                else:
+                    wall_end = pygame.mouse.get_pos()
+                    walls.append(Wall(wall_start[0], wall_start[1], wall_end[0], wall_end[1]))
+                    drawing_wall = False
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:  # Right click
+            drawing_wall = False
+            wall_start = None
     # Game logic goes here
     mouse_pos = pygame.mouse.get_pos()
     lightSource.update(mouse_pos[0], mouse_pos[1])
@@ -57,7 +72,12 @@ while running:
     for wall in walls:
         wall.show(screen)
 
-    lightSource.cast(screen, walls)
+    if drawing_wall and wall_start:
+        mouse_pos = pygame.mouse.get_pos()
+        pygame.draw.line(screen, (100, 255, 100), wall_start, mouse_pos, 2)
+
+    if not drawing_wall:
+        lightSource.cast(screen, walls)
     # Update display
     pygame.display.flip()
 
