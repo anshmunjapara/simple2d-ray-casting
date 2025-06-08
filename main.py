@@ -30,6 +30,8 @@ for _ in range(5):
     y2 = random.randint(0, HEIGHT)
     walls.append(Wall(x1, y1, x2, y2))
 
+
+
 lightSource = Light(400, 300)
 
 # Main game loop
@@ -53,7 +55,7 @@ while running:
     for wall in walls:
         wall.show(screen)
 
-    lightSource.cast(screen, walls[0])
+    lightSource.cast(screen, walls)
     # Update display
     pygame.display.flip()
 

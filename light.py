@@ -15,14 +15,22 @@ class Light:
         self.position.x = x
         self.position.y = y
 
-    def cast(self, surface, wall):
+    def cast(self, surface, walls):
         for ray in self.rays:
             ray.show(surface)
 
         for ray in self.rays:
-            pt = ray.cast(wall)
-            if pt:
-                pygame.draw.aaline(surface, (255, 255, 255), ray.origin, pt)
+            minDistance = float('inf')
+            minPt = None
+            for wall in walls:
+                pt = ray.cast(wall)
+                if pt:
+                    dis = self.position.distance_to(pt)
+                    if dis < minDistance:
+                        minDistance = dis
+                        minPt = pt
+            if minPt:
+                pygame.draw.aaline(surface, (255, 255, 255), ray.origin, minPt)
 
 
 

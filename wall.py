@@ -7,4 +7,4 @@ class Wall:
         self.end = pygame.math.Vector2(x2, y2)
 
     def show(self, surface):
-        pygame.draw.line(surface, (255, 255, 255), self.start, self.end, 2)
+        pygame.draw.aaline(surface, (255, 255, 255), self.start, self.end)
