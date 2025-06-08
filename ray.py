@@ -8,7 +8,7 @@ class Ray:
         self.length = 10
 
     def show(self, surface):
-        pygame.draw.aaline(surface, (255, 255, 255), self.origin, self.origin + self.dir * self.length, 2)
+        pygame.draw.aaline(surface, (255, 255, 255), self.origin, self.origin + self.dir * self.length)
 
     def update(self, pos):
         self.dir.x = pos[0] - self.origin[0]

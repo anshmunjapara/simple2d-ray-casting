@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 walls = []
-    # Wall(700, 200, 700, 300)
+# Wall(700, 200, 700, 300)
 for _ in range(5):
     x1 = random.randint(0, WIDTH)
     y1 = random.randint(0, HEIGHT)
@@ -30,7 +30,10 @@ for _ in range(5):
     y2 = random.randint(0, HEIGHT)
     walls.append(Wall(x1, y1, x2, y2))
 
-
+walls.append(Wall(0, 0, WIDTH, 0))
+walls.append(Wall(WIDTH, 0, WIDTH, HEIGHT))
+walls.append(Wall(WIDTH, HEIGHT, 0, HEIGHT))
+walls.append(Wall(0, HEIGHT, 0, 0))
 
 lightSource = Light(400, 300)
 
@@ -48,7 +51,6 @@ while running:
     # Game logic goes here
     mouse_pos = pygame.mouse.get_pos()
     lightSource.update(mouse_pos[0], mouse_pos[1])
-
 
     # Drawing
     screen.fill(BG_COLOR)

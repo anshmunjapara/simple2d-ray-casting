@@ -16,6 +16,7 @@ class Light:
         self.position.y = y
 
     def cast(self, surface, walls):
+        ray_surf = pygame.Surface(surface.get_size(), pygame.SRCALPHA)
         for ray in self.rays:
             ray.show(surface)
 
@@ -30,7 +31,7 @@ class Light:
                         minDistance = dis
                         minPt = pt
             if minPt:
-                pygame.draw.aaline(surface, (255, 255, 255), ray.origin, minPt)
+                pygame.draw.aaline(ray_surf, (255, 255, 255, 50), ray.origin, minPt)
 
-
+        surface.blit(ray_surf, (0, 0))
 
