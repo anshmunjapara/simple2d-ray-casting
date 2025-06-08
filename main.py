@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 walls = []
-# Wall(700, 200, 700, 300)
+
 for _ in range(5):
     x1 = random.randint(0, WIDTH)
     y1 = random.randint(0, HEIGHT)
